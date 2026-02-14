@@ -1,4 +1,4 @@
-const themeInitScript = `(() => { => {
+const themeInitScript = `(() => {
   try {
     const storedTheme = localStorage.getItem('theme');
     const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;

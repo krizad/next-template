@@ -1,38 +1,5 @@
 import { NextResponse } from 'next/server';
-
-// Mock database (shared with /api/users/route.ts)
-interface User {
-  id: string;
-  email: string;
-  name: string;
-  role: string;
-  createdAt: string;
-}
-
-// In production, you'd fetch this from your actual database
-const mockUsers: User[] = [
-  {
-    id: '1',
-    email: 'john.doe@example.com',
-    name: 'John Doe',
-    role: 'user',
-    createdAt: new Date('2023-01-15').toISOString(),
-  },
-  {
-    id: '2',
-    email: 'jane.smith@example.com',
-    name: 'Jane Smith',
-    role: 'admin',
-    createdAt: new Date('2023-02-20').toISOString(),
-  },
-  {
-    id: '3',
-    email: 'bob.johnson@example.com',
-    name: 'Bob Johnson',
-    role: 'user',
-    createdAt: new Date('2023-03-10').toISOString(),
-  },
-];
+import { mockUsers, validateEmail } from '../../_data/users';
 
 /**
  * GET /api/users/[id]
@@ -129,8 +96,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
     }
 
     if (body.email !== undefined) {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(body.email)) {
+      if (!validateEmail(body.email)) {
         return NextResponse.json(
           {
             success: false,

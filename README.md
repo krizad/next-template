@@ -1,8 +1,8 @@
 # Next.js 16 Template (App Router)
 
-✨ A production-ready **boilerplate** for kickstarting Next.js projects with feature-based architecture, component reusability, and pre-configured everything.
+![CI](https://github.com/<owner>/next-template/actions/workflows/ci.yml/badge.svg)
 
-🎉 **Fully enhanced with 6 interactive demo pages, comprehensive examples, production patterns, and best practices!**
+✨ A production-ready **boilerplate** for kickstarting Next.js projects with feature-based architecture, component reusability, and pre-configured everything.
 
 ---
 
@@ -22,20 +22,19 @@ npm run dev
 
 ---
 
-## ✨ What's New - Enhanced Features
+## ✨ What's Included
 
-### 6 Interactive Demo Pages
+### Example Pages
 
 | Page                    | URL                | Purpose                                           |
 | ----------------------- | ------------------ | ------------------------------------------------- |
-| **Components Showcase** | `/components-demo` | See all UI components with examples               |
-| **Advanced Modals**     | `/advanced-modals` | Complex modal patterns (notification, wizard, etc)|
-| **CRUD Example**        | `/crud-example`    | Complete user management system                  |
-| **API Error Demo**      | `/api-error-demo`  | Error handling with 10+ HTTP status codes        |
-| **Quick Example**       | `/quick-example`   | Simple best practices example                    |
-| **API Sandbox**         | `/api-sandbox`     | Interactive API tester                           |
-
-**Access all demos:** Visit `/demos` or use the quick access buttons
+| **Landing**             | `/`                | Home page with feature showcase                   |
+| **Dashboard**           | `/dashboard`       | Stats, activity feed, CRUD user management        |
+| **Profile**             | `/profile`         | User profile with edit form                       |
+| **Components**          | `/components`      | All UI components with interactive examples       |
+| **Server Example**      | `/server-example`  | RSC + Server Actions patterns                     |
+| **Login**               | `/login`           | Login form with validation                        |
+| **Register**            | `/register`        | Registration form with validation                 |
 
 ### Enhanced API Routes & Features
 
@@ -51,9 +50,9 @@ npm run dev
 
 **Core Features**
 - ✨ **Feature-based architecture** - Scalable code organization
-- 🧩 **UI components** - Button, Input, Card, Modal, Toast (ready to extend)
-- 📄 **Example pages** - Dashboard, Profile, 6 interactive demos
-- 🔐 **Auth pages** - Login & Register with route groups
+- 🧩 **UI components** - Button, Input, Card, Modal, Toast, Skeleton, Select, Textarea, Table, Tabs, Dropdown
+- 📄 **Example pages** - Dashboard, Profile, Components showcase, Server example
+- 🔐 **Auth pages** - Login & Register with form validation (React Hook Form + Zod)
 
 **Development Tools**
 - 🎣 **Custom hooks** - useLocalStorage, useMediaQuery, useFetch, useModal
@@ -78,13 +77,14 @@ src/
 ├── app/
 │   ├── (auth)/               🔐 Auth page route group
 │   ├── api/                  📡 API routes
-│   ├── components-demo/      🎨 Components showcase
-│   ├── advanced-modals/      📦 Advanced modal patterns
-│   ├── crud-example/         ⚙️  Full CRUD example
-│   ├── api-error-demo/       ⚠️  Error handling demo
+│   ├── components/           🎨 Components showcase
 │   ├── dashboard/            📊 Dashboard example
 │   ├── profile/              👤 Profile feature
+│   ├── server-example/       🖥️  RSC + Server Actions
 │   ├── layout.tsx            🎯 Root layout
+│   ├── loading.tsx           ⏳ Global loading UI
+│   ├── error.tsx             ⚠️  Global error boundary
+│   ├── not-found.tsx         🔍 404 page
 │   ├── page.tsx              🏠 Home page
 │   └── globals.css           🎨 Global styles
 
@@ -125,12 +125,9 @@ src/
 | Route                     | Purpose                              | Type      |
 | ------------------------- | ------------------------------------ | --------- |
 | `/`                       | Landing page                        | Page      |
-| `/components-demo`        | UI components showcase               | Demo      |
-| `/advanced-modals`        | Modal patterns                       | Demo      |
-| `/crud-example`           | User management CRUD                 | Demo      |
-| `/api-error-demo`         | Error handling patterns              | Demo      |
-| `/api-sandbox`            | API testing                          | Demo      |
-| `/dashboard`              | Dashboard example                    | Page      |
+| `/components`             | UI components showcase               | Page      |
+| `/server-example`         | RSC + Server Actions demo            | Page      |
+| `/dashboard`              | Dashboard with CRUD                  | Page      |
 | `/profile`                | User profile                         | Page      |
 | `/login`, `/register`     | Authentication                       | Auth      |
 | `/api/users`              | User list (GET, POST)                | API       |
@@ -270,18 +267,18 @@ NEXT_PUBLIC_API_BASE_URL=http://localhost:3000/api
 
 ### Day 1 - Getting Started
 1. Read [GETTING_STARTED.md](docs/GETTING_STARTED.md) - Setup & run
-2. Visit `/components-demo` - See all UI components
-3. Try `/quick-example` - Simple use case
+2. Visit `/components` - See all UI components
+3. Try `/dashboard` - CRUD management example
 
 ### Day 2 - Core Patterns
 1. Read [BOILERPLATE_GUIDE.md](docs/BOILERPLATE_GUIDE.md) - Complete guide
-2. Explore `/crud-example` - Full CRUD system
-3. Study `/api-error-demo` - Error handling patterns
+2. Explore `/server-example` - RSC + Server Actions
+3. Study [API_ERROR_HANDLING.md](docs/API_ERROR_HANDLING.md) - Error patterns
 
 ### Day 3 - Advanced Topics
 1. Review source code in `src/app/`
-2. Check `/advanced-modals` - Complex modal patterns
-3. Read [DEVELOPMENT_GUIDE.md](docs/DEVELOPMENT_GUIDE.md) - Advanced patterns
+2. Read [DEVELOPMENT_GUIDE.md](docs/DEVELOPMENT_GUIDE.md) - Advanced patterns
+3. Check [API_INTEGRATION.md](docs/API_INTEGRATION.md) - API patterns
 
 ---
 
@@ -368,15 +365,13 @@ A: Yes! All styles use Tailwind CSS. Edit `src/app/globals.css` for global chang
 
 ## 📊 By The Numbers
 
-- **6** interactive demo pages
-- **11+** API route examples
-- **50+** code examples throughout
+- **7** example pages with real functionality
+- **11** UI components (Button, Input, Card, Modal, Toast, Skeleton, Select, Textarea, Table, Tabs, Dropdown)
+- **6** API route examples
 - **8+** comprehensive documentation files
-- **100+** components & patterns
-- **10+** HTTP status codes covered
-- **5** toast variants
-- **5** modal sizes
-- **5** button variants
+- **Full** test suite with Vitest + Testing Library
+- **CI/CD** with GitHub Actions
+- **Docker** ready with multi-stage builds
 - **0** configuration required to start!
 
 ---
@@ -419,7 +414,7 @@ Open source. Free for personal & commercial use.
 
 ## 🤝 Next Steps
 
-1. **Explore** → Visit `/demos` see all interactive examples
+1. **Explore** → Visit `/components` to see all UI components
 2. **Understand** → Read [BOILERPLATE_GUIDE.md](docs/BOILERPLATE_GUIDE.md)
 3. **Customize** → Follow [CUSTOMIZATION_GUIDE.md](docs/CUSTOMIZATION_GUIDE.md)
 4. **Build** → Create your amazing application!

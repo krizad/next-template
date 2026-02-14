@@ -43,7 +43,11 @@ class ApiClient {
     config?: AxiosRequestConfig,
   ): Promise<ApiResponse<T>> {
     try {
-      const response = await this.instance[method]<T>(endpoint, data, config);
+      // For GET and DELETE, axios signature is (url, config) — no data param
+      const response =
+        method === 'get' || method === 'delete'
+          ? await this.instance[method]<T>(endpoint, config)
+          : await this.instance[method]<T>(endpoint, data, config);
 
       return {
         success: true,

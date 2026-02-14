@@ -1,4 +1,4 @@
-.PHONY: help install dev build start clean lint lint-fix format typecheck check test setup setup-windows
+.PHONY: help install dev build start clean lint lint-fix format typecheck check test test-watch test-coverage setup setup-windows docker docker-up docker-down
 
 # Colors for output
 BLUE := \033[0;34m
@@ -64,9 +64,17 @@ check: ## Run all checks (lint + typecheck + format)
 	npm run check
 	@echo "$(GREEN)✅ All checks passed!$(NC)"
 
-test: ## Run tests (if configured)
+test: ## Run tests with Vitest
 	@echo "$(BLUE)🧪 Running tests...$(NC)"
-	npm test
+	npx vitest run
+
+test-watch: ## Run tests in watch mode
+	@echo "$(BLUE)🧪 Running tests in watch mode...$(NC)"
+	npx vitest
+
+test-coverage: ## Run tests with coverage report
+	@echo "$(BLUE)🧪 Running tests with coverage...$(NC)"
+	npx vitest run --coverage
 
 clean: ## Clean build and cache files
 	@echo "$(BLUE)🗑️  Cleaning build files...$(NC)"
@@ -104,5 +112,20 @@ audit-fix: ## Fix security vulnerabilities
 
 reset: clean install ## Clean and reinstall everything
 	@echo "$(GREEN)✅ Full reset complete!$(NC)"
+
+docker: ## Build Docker image
+	@echo "$(BLUE)🐳 Building Docker image...$(NC)"
+	docker build -t next-template .
+	@echo "$(GREEN)✅ Docker image built!$(NC)"
+
+docker-up: ## Start with Docker Compose
+	@echo "$(BLUE)🐳 Starting with Docker Compose...$(NC)"
+	docker compose up -d
+	@echo "$(GREEN)✅ Running at http://localhost:3000$(NC)"
+
+docker-down: ## Stop Docker Compose
+	@echo "$(BLUE)🐳 Stopping containers...$(NC)"
+	docker compose down
+	@echo "$(GREEN)✅ Stopped!$(NC)"
 
 .DEFAULT_GOAL := help

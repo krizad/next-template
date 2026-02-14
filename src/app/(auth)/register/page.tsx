@@ -3,31 +3,31 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { registerSchema, type RegisterInput } from '@/lib/validations/auth';
 
 export default function RegisterPage() {
   const router = useRouter();
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-  });
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterInput>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: { name: '', email: '', password: '', confirmPassword: '' },
+  });
 
-    if (formData.password !== formData.confirmPassword) {
-      alert('Passwords do not match');
-      return;
-    }
-
+  const onSubmit = async (data: RegisterInput) => {
     setIsLoading(true);
 
-    // Simulate API call
+    // TODO: Replace with authService.register(data)
+    console.log('Register:', data.email);
     setTimeout(() => {
       setIsLoading(false);
       router.push('/login');
@@ -42,38 +42,34 @@ export default function RegisterPage() {
           <CardDescription>Enter your information to get started</CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <Input
               label="Name"
               type="text"
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               placeholder="John Doe"
-              required
+              error={errors.name?.message}
+              {...register('name')}
             />
             <Input
               label="Email"
               type="email"
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               placeholder="you@example.com"
-              required
+              error={errors.email?.message}
+              {...register('email')}
             />
             <Input
               label="Password"
               type="password"
-              value={formData.password}
-              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
               placeholder="••••••••"
-              required
+              error={errors.password?.message}
+              {...register('password')}
             />
             <Input
               label="Confirm Password"
               type="password"
-              value={formData.confirmPassword}
-              onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
               placeholder="••••••••"
-              required
+              error={errors.confirmPassword?.message}
+              {...register('confirmPassword')}
             />
             <Button type="submit" className="w-full" isLoading={isLoading}>
               Create account
