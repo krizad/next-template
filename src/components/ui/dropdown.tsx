@@ -87,13 +87,7 @@ function DropdownTrigger({ className, children, ...props }: Readonly<DropdownTri
   const { toggle } = useDropdownContext();
 
   return (
-    <button
-      type="button"
-      onClick={toggle}
-      className={className}
-      aria-haspopup="true"
-      {...props}
-    >
+    <button type="button" onClick={toggle} className={className} aria-haspopup="true" {...props}>
       {children}
     </button>
   );
@@ -137,7 +131,13 @@ interface DropdownItemProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   destructive?: boolean;
 }
 
-function DropdownItem({ className, children, destructive, onClick, ...props }: Readonly<DropdownItemProps>) {
+function DropdownItem({
+  className,
+  children,
+  destructive,
+  onClick,
+  ...props
+}: Readonly<DropdownItemProps>) {
   const { close } = useDropdownContext();
 
   return (
@@ -168,7 +168,10 @@ function DropdownSeparator({ className }: Readonly<{ className?: string }>) {
 }
 
 // --- DropdownLabel ---
-function DropdownLabel({ className, children }: Readonly<{ className?: string; children: ReactNode }>) {
+function DropdownLabel({
+  className,
+  children,
+}: Readonly<{ className?: string; children: ReactNode }>) {
   return (
     <div className={cn('text-muted-foreground px-2 py-1.5 text-xs font-semibold', className)}>
       {children}
